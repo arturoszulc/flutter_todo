@@ -7,38 +7,47 @@ enum LoginType {
 class LoginStateModel {
   final bool isLoading;
   final LoginType type;
+  final TextInputModel email;
+  final TextInputModel password;
   final String? authError;
-  final String? emailError;
-  final String? passwordError;
-  const LoginStateModel({
+  LoginStateModel({
     required this.isLoading,
     required this.type,
+    required this.email,
+    required this.password,
     this.authError,
-    this.emailError,
-    this.passwordError,
   });
 
   const LoginStateModel.initial({
     this.isLoading = false,
     this.type = LoginType.signIn,
+    this.email = const TextInputModel(),
+    this.password = const TextInputModel(),
     this.authError,
-    this.emailError,
-    this.passwordError,
   });
 
   LoginStateModel copyWith({
     bool? isLoading,
     LoginType? type,
+    TextInputModel? email,
+    TextInputModel? password,
     String? authError,
-    String? emailError,
-    String? passwordError,
   }) {
     return LoginStateModel(
       isLoading: isLoading ?? this.isLoading,
       type: type ?? this.type,
+      email: email ?? this.email,
+      password: password ?? this.password,
       authError: authError,
-      emailError: emailError,
-      passwordError: passwordError,
     );
   }
+}
+
+class TextInputModel {
+  final bool valid;
+  final String? error;
+  const TextInputModel({
+    this.valid = false,
+    this.error,
+  });
 }

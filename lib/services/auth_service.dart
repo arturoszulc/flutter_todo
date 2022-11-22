@@ -1,59 +1,35 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_todo/controllers/user_controller.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../utils/consts/errors.dart';
-// import 'package:sepapka/services/user_service.dart';
-// import 'package:sepapka/utils/api_status.dart';
-// import 'package:sepapka/utils/consts/errors_messages.dart';
-// import 'package:sepapka/controllers/app_state_controller.dart';
-
-// final authServiceProvider = Provider.autoDispose<AuthService>((ref) {
-//   return AuthService(ref);
-// });
-
-final authStateProvider = StreamProvider.autoDispose<User?>((ref) {
-  return ref.watch(AuthService.provider).authStateChange;
-});
 
 class AuthService {
-  static final provider =
-      Provider.autoDispose<AuthService>((ref) => AuthService(ref));
+  static final provider = Provider<AuthService>((ref) => AuthService(ref));
   //Properties
   final Ref _ref;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final _googleSignIn = GoogleSignIn();
-  // To test web app on correct port, run:
-  // flutter run -d chrome --web-hostname localhost --web-port 8080
 
-  //  This getter will be returning a Stream of User object.
-  //  It will be used to check if the user is logged in or not.
   Stream<User?> get authStateChange => _auth.authStateChanges();
 
-  //Constructor - default
   AuthService(this._ref) {
     log('^^^ authService initialized ^^^');
     // watchAuthUser();
   }
 
   // watchAuthUser() {
-  //   authStateChange.listen((User? user) async {
+  //   _auth.authStateChanges().listen((User? user) async {
   //     if (user != null) {
-  //       log('/// AuthService: User signed in ///');
-  //       _ref.read(userService.notifier).getUserFromDb(user.uid);
-  //     }
-  //     if (user == null) {
-  //       log('/// AuthService: User signed out ///');
-  //       _ref.read(appStateNotifierProvider.notifier).userSignedOut();
-  //       // _ref.read(routeController).navigate(MyScreen.signIn);
+  //       debugPrint('/// AuthService: User signed in ///');
+  //       _ref.read(UserController.provider).getUserFromDb(user.uid);
   //     }
   //   });
   // }
-
-  //Getters
-  // FirebaseAuth get auth => _auth;
 
   Future<String?> signUpEmail(String email, String password) async {
     try {
@@ -96,17 +72,12 @@ class AuthService {
       await _auth.signInWithCredential(credential);
       return null;
     } catch (e) {
-      return MyError.errorSignInGoogle;
+      return MyError.signInGoogle;
     }
   }
 
-  Future<String?> signOut() async {
-    try {
-      await _auth.signOut();
-      return null;
-    } on FirebaseAuthException catch (e) {
-      return getMessageFromErrorCode(e.code);
-    }
+  Future<void> signOut() async {
+    await _auth.signOut();
   }
 
   String getMessageFromErrorCode(String code) {
@@ -114,28 +85,28 @@ class AuthService {
       case "ERROR_EMAIL_ALREADY_IN_USE":
       case "account-exists-with-different-credential":
       case "email-already-in-use":
-        return "Ten adres e-mail jest już zajęty. Spróbuj się zalogować";
+        return "This e-mail was already used. Try to sign in";
       case "ERROR_WRONG_PASSWORD":
       case "wrong-password":
-        return "Nieprawidłowe hasło";
+        return "Wrong password";
       case "ERROR_USER_NOT_FOUND":
       case "user-not-found":
-        return "Nie znaleziono konta zarejestrowanego na podany adres e-mail";
+        return "We didn't find an account associated with this e-mail address";
       case "ERROR_USER_DISABLED":
       case "user-disabled":
-        return "Użytkownik jest zablokowany";
+        return "Account is disabled";
       case "ERROR_TOO_MANY_REQUESTS":
       case "operation-not-allowed":
-        return "Tymczasowo zablokowano dostęp ze względu na zbyt częste próby logownia. Spróbuj później";
+        return "Access is temporarly disabled. Try again later.";
       case "too-many-requests":
-        return "Tymczasowo zablokowano dostęp ze względu na zbyt częste próby logownia. Spróbuj później";
+        return "Access is temporarly disabled. Try again later.";
       case "ERROR_INVALID_EMAIL":
       case "invalid-email":
-        return "Nieprawidłowy adres e-mail";
+        return "Invalid e-mail";
       case "network-request-failed":
-        return "Brak połączenia z internetem, spróbuj ponownie";
+        return "Turn on internet connection and try again";
       default:
-        return "Błąd logowania, spróbuj ponownie";
+        return "Sign in error, try again later";
     }
   }
 }
