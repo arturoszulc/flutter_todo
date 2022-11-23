@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo/controllers/ad_controller.dart';
 import 'package:flutter_todo/controllers/user_controller.dart';
-import 'package:flutter_todo/screens/add_todo_screen.dart';
+import 'package:flutter_todo/screens/todo_update_screen.dart';
 import 'package:flutter_todo/utils/consts/strings.dart';
 
 class TodoScreen extends ConsumerWidget {
@@ -12,7 +12,8 @@ class TodoScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final String username =
         ref.watch(UserState.provider.select((value) => value.username));
-    final bool isAdLoaded = ref.watch(AdState.provider).isAdLoaded;
+    final bool isAdLoaded =
+        ref.watch(AdState.provider.select((value) => value.isAdLoaded));
     return Scaffold(
       appBar: AppBar(
         title: Text('Welcome, $username'),
@@ -22,7 +23,7 @@ class TodoScreen extends ConsumerWidget {
               onPressed: () => ref.read(UserController.provider).signOut(),
               child: const Text(
                 MyString.signOut,
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(color: Colors.white),
               )),
         ],
       ),
@@ -98,6 +99,9 @@ class TodoList extends ConsumerWidget {
                 .map((e) => TodoSingle(
                       todo: e,
                       onEditPressed: () {
+                        // ref
+                        //     .read(UserController.provider)
+                        //     .editTodo(todos.indexOf(e));
                         Navigator.push(
                             context,
                             MaterialPageRoute(

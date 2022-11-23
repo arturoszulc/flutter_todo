@@ -1,35 +1,22 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_todo/controllers/user_controller.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../utils/consts/errors.dart';
 
 class AuthService {
-  static final provider = Provider<AuthService>((ref) => AuthService(ref));
+  static final provider = Provider<AuthService>((ref) => AuthService());
   //Properties
-  final Ref _ref;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final _googleSignIn = GoogleSignIn();
 
   Stream<User?> get authStateChange => _auth.authStateChanges();
 
-  AuthService(this._ref) {
+  AuthService() {
     log('^^^ authService initialized ^^^');
-    // watchAuthUser();
   }
-
-  // watchAuthUser() {
-  //   _auth.authStateChanges().listen((User? user) async {
-  //     if (user != null) {
-  //       debugPrint('/// AuthService: User signed in ///');
-  //       _ref.read(UserController.provider).getUserFromDb(user.uid);
-  //     }
-  //   });
-  // }
 
   Future<String?> signUpEmail(String email, String password) async {
     try {

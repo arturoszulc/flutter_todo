@@ -1,53 +1,46 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-enum LoginType {
+import 'package:flutter_todo/models/text_input_model.dart';
+
+enum AuthType {
   signIn,
   signUp,
 }
 
-class LoginStateModel {
+class AuthModel {
   final bool isLoading;
-  final LoginType type;
+  final AuthType type;
   final TextInputModel email;
   final TextInputModel password;
-  final String? authError;
-  LoginStateModel({
+  final String authError;
+  AuthModel({
     required this.isLoading,
     required this.type,
     required this.email,
     required this.password,
-    this.authError,
+    required this.authError,
   });
 
-  const LoginStateModel.initial({
+  const AuthModel.initial({
     this.isLoading = false,
-    this.type = LoginType.signIn,
+    this.type = AuthType.signIn,
     this.email = const TextInputModel(),
     this.password = const TextInputModel(),
-    this.authError,
+    this.authError = '',
   });
 
-  LoginStateModel copyWith({
+  AuthModel copyWith({
     bool? isLoading,
-    LoginType? type,
+    AuthType? type,
     TextInputModel? email,
     TextInputModel? password,
     String? authError,
   }) {
-    return LoginStateModel(
+    return AuthModel(
       isLoading: isLoading ?? this.isLoading,
       type: type ?? this.type,
       email: email ?? this.email,
       password: password ?? this.password,
-      authError: authError,
+      authError: authError ?? this.authError,
     );
   }
-}
-
-class TextInputModel {
-  final bool valid;
-  final String? error;
-  const TextInputModel({
-    this.valid = false,
-    this.error,
-  });
 }

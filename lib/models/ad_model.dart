@@ -1,21 +1,21 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-class MyAdModel {
+class AdModel {
   final RewardedAd? rewardedAd;
   final int numRewardedLoadAttempts;
-  const MyAdModel({
+  const AdModel({
     this.rewardedAd,
-    this.numRewardedLoadAttempts = 0,
+    required this.numRewardedLoadAttempts,
   });
 
   bool get isAdLoaded => rewardedAd != null;
 
-  MyAdModel copyWith({
+  AdModel copyWith({
     RewardedAd? rewardedAd,
     int? numRewardedLoadAttempts,
   }) {
-    return MyAdModel(
+    return AdModel(
       rewardedAd: rewardedAd,
       numRewardedLoadAttempts:
           numRewardedLoadAttempts ?? this.numRewardedLoadAttempts,

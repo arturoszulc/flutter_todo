@@ -1,8 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:flutter_todo/models/todo_model.dart';
-
 import '../utils/consts/strings.dart';
 
 enum UserStatus {
@@ -11,15 +9,6 @@ enum UserStatus {
   signedUp,
   signedIn,
 }
-
-const List<String> fakeTodoList = [
-  'TODO 1',
-  'TODO 2',
-  'TODO 3 TODO 3 TODO 3 TODO 3 TODO 3 TODO 3 TODO 3 TODO 3 TODO 3 TODO 3 ',
-  'TODO 4 TODO 4',
-  'TODO 5 TODO 5',
-  'TODO 6',
-];
 
 class AppUser {
   final UserStatus status;
@@ -37,7 +26,7 @@ class AppUser {
   });
 
   factory AppUser.empty() =>
-      const AppUser(id: '', username: '', points: 3, todoList: fakeTodoList);
+      const AppUser(id: '', username: '', points: 3, todoList: []);
 
   factory AppUser.fromFirestore(
       DocumentSnapshot<Map<String, dynamic>> doc, SnapshotOptions? options) {

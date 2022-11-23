@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo/controllers/user_controller.dart';
+import 'package:flutter_todo/utils/consts/strings.dart';
 
 class SetUsernameScreen extends ConsumerWidget {
-  SetUsernameScreen({Key? key}) : super(key: key);
-  final GlobalKey<FormState> _setUsernameKey = GlobalKey<FormState>();
-  String username = '';
+  const SetUsernameScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
@@ -19,7 +18,7 @@ class SetUsernameScreen extends ConsumerWidget {
                 height: 20,
               ),
               const Text(
-                'Hi, what\'s your name?',
+                MyString.whatsYourName,
                 style: TextStyle(
                   fontStyle: FontStyle.italic,
                   fontSize: 24,
@@ -28,15 +27,19 @@ class SetUsernameScreen extends ConsumerWidget {
               const SizedBox(
                 height: 20,
               ),
-              Form(
-                key: _setUsernameKey,
+              //USERNAME field
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12.0),
                 child: TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Name',
+                  controller: ref.watch(usernameTextController),
+                  decoration: InputDecoration(
+                    labelText: MyString.usernameTextFieldLabel,
+                    errorText: ref.watch(usernameInputState).error,
+                    helperText: ' ',
+                    errorMaxLines: 2,
                   ),
-                  // onTap: () => usernameChanged = true,
                   onChanged: (val) {
-                    username = val;
+                    ref.read(UserController.provider).validateUsername();
                   },
                 ),
               ),
@@ -44,10 +47,13 @@ class SetUsernameScreen extends ConsumerWidget {
                 height: 10,
               ),
               ElevatedButton(
-                onPressed: () {
-                  ref.read(UserController.provider).setUserName(username);
-                },
-                child: const Text('Confirm'),
+                onPressed: ref.watch(usernameInputState).valid &&
+                        ref.watch(usernameTextController).text.isNotEmpty
+                    ? () {
+                        ref.read(UserController.provider).setUserName();
+                      }
+                    : null,
+                child: const Text(MyString.confirmButton),
               ),
             ],
           ),
