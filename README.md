@@ -1,16 +1,36 @@
 # flutter_todo
 
-A new Flutter project.
+Simple Todo app powered by Flutter, Firebase and Riverpod
 
-## Getting Started
+## Main features
+- sign in / sign up with email & password or Google
+- setup custom Username
+- add/edit/delete Todos
+- watch an Ad to add more Todos
+- don't worry about your data - it's saved in Firestore
+ 
 
-This project is a starting point for a Flutter application.
+## App structure
+App has a modular structure based on [Riverpod](https://github.com/rrousselGit/riverpod). Each functionality (like Authentication or Todos) has it's own:
+- controller
+- set of states
+- set of screens
 
-A few resources to get you started if this is your first Flutter project:
+Controllers read input from UI, get necessary data from Services and modify States accordingly.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Thanks to this approach:
+- UI and Logic are separate
+- Code is clean, easy to read and very easy to test
+- Widget rebuilts don't get out of control
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Each State and Controller is disposed, when no longer needed, thus not holding up resources.
+
+## Technologies
+- Dart: 2.18.4
+- Flutter: 3.3.7
+- flutter_riverpod: 2.1.1
+- firebase_core: 2.3.0
+- firebase_auth: 4.1.3
+- google_sign_in: 5.4.2
+- cloud_firestore: 4.1.0
+- google_mobile_ads: 2.3.0
