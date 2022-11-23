@@ -11,7 +11,7 @@ Simple Todo app powered by Flutter, Firebase and Riverpod
  
 
 ## App structure
-The app has modular structure based on [Riverpod](https://github.com/rrousselGit/riverpod). Each functionality (like Authentication or Todos) has it's own:
+The app has a modular structure based on [Riverpod](https://github.com/rrousselGit/riverpod). Each functionality (like Authentication or Todos) has it's own:
 - controller
 - set of states
 - set of screens
