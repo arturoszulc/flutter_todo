@@ -16,7 +16,7 @@ class TodoScreen extends ConsumerWidget {
         ref.watch(AdState.provider.select((value) => value.isAdLoaded));
     return Scaffold(
       appBar: AppBar(
-        title: Text('Welcome, $username'),
+        title: Text(MyString.appBarWelcome + username),
         centerTitle: true,
         actions: [
           TextButton(
@@ -29,7 +29,7 @@ class TodoScreen extends ConsumerWidget {
       ),
       body: Column(
         children: const [
-          Points(),
+          PointsLeft(),
           Expanded(child: TodoList()),
         ],
       ),
@@ -62,8 +62,8 @@ class TodoScreen extends ConsumerWidget {
   }
 }
 
-class Points extends ConsumerWidget {
-  const Points({super.key});
+class PointsLeft extends ConsumerWidget {
+  const PointsLeft({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -73,8 +73,8 @@ class Points extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(vertical: 15.0),
         child: Text(
             userPoints == 1
-                ? '$userPoints todo left'
-                : '$userPoints todos left',
+                ? userPoints.toString() + MyString.todosOneLeft
+                : userPoints.toString() + MyString.todosLeft,
             style: Theme.of(context).textTheme.headline6),
       ),
     );
@@ -90,7 +90,7 @@ class TodoList extends ConsumerWidget {
     return todos.isEmpty
         ? const Center(
             child: Text(
-              'Todo list is empty',
+              MyString.todoListEmpty,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           )
@@ -99,9 +99,6 @@ class TodoList extends ConsumerWidget {
                 .map((e) => TodoSingle(
                       todo: e,
                       onEditPressed: () {
-                        // ref
-                        //     .read(UserController.provider)
-                        //     .editTodo(todos.indexOf(e));
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -134,9 +131,8 @@ class TodoSingle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        contentPadding: const EdgeInsets.fromLTRB(15.0, 0, 0, 0),
+        contentPadding: const EdgeInsets.only(left: 15.0),
         title: Text(todo),
-        // leading: const Icon(Icons.library_books),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

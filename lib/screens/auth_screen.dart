@@ -186,7 +186,7 @@ class AuthButtons extends ConsumerWidget {
             ref.read(LoginController.provider).authenticateGoogle();
           },
           icon: Image.asset(
-            MyAsset.loginGoogleImage,
+            MyAsset.signInGoogleButtonImg,
             height: 22,
             width: 22,
           ),

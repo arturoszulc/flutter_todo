@@ -98,6 +98,8 @@ class LoginController {
     //get input texts
     final email = _ref.read(emailController).text.toLowerCase();
     final password = _ref.read(passwordController).text;
+
+    //try to authenticate
     final String? authResult;
     switch (_ref.read(AuthState.provider).type) {
       case AuthType.signIn:

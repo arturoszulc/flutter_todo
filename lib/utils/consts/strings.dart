@@ -21,13 +21,18 @@ class MyString {
   static const String whatsYourName = 'Hi, what\'s your name?';
   static const String confirmButton = 'Confirm';
 
-  //todo screen
+  //todo list screen
+  static const String appBarWelcome = 'Welcome, ';
+  static const String todosOneLeft = ' todo left';
+  static const String todosLeft = ' todos left';
+  static const String todoListEmpty = 'Todo list is empty';
   static const String signOut = 'Sign Out';
   static const String getPoints = 'Get more points!';
 
-  //update todo screen
+  //todo update screen
   static const String appBarAddingTodo = 'Add new Todo';
   static const String appBarEditingTodo = 'Edit Todo';
+  static const String todoTextFieldHint = 'Remeber to...';
   static const String addTodoButton = 'Add Todo';
   static const String updateTodoButton = 'Update Todo';
 }

@@ -28,11 +28,10 @@ class UpdateTodoScreen extends ConsumerWidget {
               child: TextFormField(
                   controller: ref.watch(todoTextController(todoIndex)),
                   textInputAction: TextInputAction.done,
-                  // expands: true,
                   maxLines: 6,
                   decoration: InputDecoration(
                     helperText: ' ',
-                    hintText: 'Remeber to...',
+                    hintText: MyString.todoTextFieldHint,
                     border: const OutlineInputBorder(),
                     enabledBorder: const OutlineInputBorder(),
                     focusedBorder: const OutlineInputBorder(),
