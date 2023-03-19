@@ -1,5 +1,6 @@
 # flutter_todo
 
+Some changes
 Simple Todo app powered by Flutter, Firebase and Riverpod
 
 ## Main features
